@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050510">
+<title>GOTY | آرشیو بهترین بازی سال</title>
+<meta name="description" content="آرشیو کامل برندگان جایزه بهترین بازی سال از ۲۰۰۳ تا ۲۰۲۵">
+<meta name="author" content="آریا عزیزی">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- =========================
+     Background FX
+========================= -->
+<div class="fx" aria-hidden="true">
+    <div class="dance-floor"></div>
+    <div class="beam beam-1"></div>
+    <div class="beam beam-2"></div>
+    <div class="beam beam-3"></div>
+    <div class="beam beam-4"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid"></div>
+    <div class="noise"></div>
+</div>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<!-- =========================
+     Device badge
+========================= -->
+<button class="dev-badge" id="devBadge" aria-label="اطلاعات دستگاه" title="برای تنظیمات کلیک کن">
+    <span class="dot"></span>
+    <span class="lbl">Device:</span>
+    <span class="tier" id="devTier">HIGH</span>
+</button>
+
+<!-- =========================
+     Header
+========================= -->
+<header class="header glass" id="siteHeader">
+    <div class="header-row">
+        <div class="brand">
+            <span class="brand-mark">🏆</span>
+            <div>
+                <div class="brand-name">GOTY</div>
+                <div class="brand-tag">آرشیو بهترین بازی سال</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" id="settingsBtn" aria-label="تنظیمات" title="تنظیمات">
+                <span>🎨</span>
+            </button>
+            <button class="icon-btn" id="favoritesBtn" aria-label="علاقه‌مندی‌ها">
+                <span class="icon-heart">&hearts;</span>
+                <span class="badge" id="favBadge">0</span>
+            </button>
+            <button class="icon-btn" id="themeToggle" aria-label="تغییر تم">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- =========================
+     Hero
+========================= -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-card glass">
+            <span class="hero-badge">۲۰۰۳ تا ۲۰۲۵</span>
+            <h1 class="hero-title"><span class="grad-text">Game of the Year</span></h1>
+            <p class="hero-sub">آرشیو کامل برندگان GOTY بر اساس بیشترین جوایز دریافتی</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num" data-count="23">۰</span>
+                    <span class="stat-lbl">بازی</span>
+                </div>
+                <div class="stat-sep"></div>
+                <div class="stat">
+                    <span class="stat-num" data-count="4500">۰</span>
+                    <span class="stat-lbl">جایزه</span>
+                </div>
+                <div class="stat-sep"></div>
+                <div class="stat">
+                    <span class="stat-num" data-count="23">۰</span>
+                    <span class="stat-lbl">سال</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     Controls
+========================= -->
+<section class="controls">
+    <div class="container">
+        <div class="controls-card glass">
+
+            <div class="search-box">
+                <span class="search-icon" aria-hidden="true">🔍</span>
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-input"
+                    placeholder="جستجوی بازی..."
+                    autocomplete="off"
+                    aria-label="جستجو">
+            </div>
+
+            <div class="filter-row">
+                <div class="dropdown" data-dropdown="year">
+                    <button class="dd-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="dd-text">همه سال‌ها</span>
+                        <span class="dd-arrow">▾</span>
+                    </button>
+                    <div class="dd-menu" role="listbox"></div>
+                </div>
+
+                <div class="dropdown" data-dropdown="sort">
+                    <button class="dd-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="dd-text">جدیدترین</span>
+                        <span class="dd-arrow">▾</span>
+                    </button>
+                    <div class="dd-menu" role="listbox"></div>
+                </div>
+
+                <button class="pill-btn" id="randomBtn" aria-label="بازی تصادفی">
+                    <span>🎲</span>
+                    <span>تصادفی</span>
+                </button>
+
+                <button class="pill-btn" id="favFilterBtn" aria-label="فقط علاقه‌مندی‌ها">
+                    <span class="icon-heart">&hearts;</span>
+                    <span>علاقه‌مندی</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="result-bar">
+            <strong id="resultCount">0</strong> بازی پیدا شد
+        </div>
+    </div>
+</section>
+
+<!-- =========================
+     Games grid
+========================= -->
+<main class="container content">
+    <div class="grid-cards" id="gamesGrid" role="list"></div>
+
+    <div class="empty glass" id="emptyState" hidden>
+        <span class="empty-icon">🎮</span>
+        <p>هیچ بازی‌ای پیدا نشد</p>
+        <small>فیلترها رو تغییر بده یا جستجو رو پاک کن</small>
+    </div>
+</main>
+
+<!-- =========================
+     Footer + Copyright
+========================= -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-brand">
+            <span class="icon">🏆</span>
+            <span class="name">GOTY Archive</span>
+        </div>
+
+        <p class="footer-hint">روی هر کارت کلیک کن تا جزئیات کامل جوایز رو ببینی</p>
+
+        <div class="footer-divider"></div>
+
+        <p class="footer-copy">
+            ساخته شده با <span class="heart">&hearts;</span> توسط
+            <strong data-open-copyright>آریا عزیزی</strong>
+        </p>
+
+        <div class="footer-rights">
+            <span>&copy; ۲۰۲۵ GOTY Archive</span>
+            <span class="sep"></span>
+            <span>تمام حقوق محفوظ است</span>
+            <span class="sep"></span>
+            <span>All Rights Reserved</span>
+        </div>
+
+        <p class="footer-hint" style="margin-top:14px">
+            این پروژه صرفاً جهت نمایش اطلاعات عمومی برندگان جوایز بازی‌های ویدئویی ساخته شده است.
+        </p>
+    </div>
+</footer>
+
+<!-- =========================
+     Back to top
+========================= -->
+<button class="to-top" id="backToTop" aria-label="برگشت به بالا">
+    <span>&uarr;</span>
+</button>
+
+<!-- =========================
+     Detail modal
+========================= -->
+<div class="ovl" id="modalOverlay" hidden>
+    <div class="ovl-bd" id="modalBackdrop"></div>
+    <div class="modal glass" role="dialog" aria-modal="true">
+        <div class="modal-grab"></div>
+        <button class="modal-x" id="modalClose" aria-label="بستن">&times;</button>
+        <div class="modal-body" id="modalContent"></div>
+    </div>
+</div>
+
+<!-- =========================
+     Copyright modal
+========================= -->
+<div class="copy-modal-overlay" id="copyModalOverlay" hidden>
+    <div class="copy-modal" id="copyModal" role="dialog" aria-modal="true" aria-label="اطلاعات اعتبار و کپی‌رایت">
+        <h3>Copyright &amp; Verification</h3>
+
+        <div class="item">
+            <span class="ico">©</span>
+            <div>
+                <strong>© 2025 Aria Azizi — GOTY Archive</strong><br>
+                All Rights Reserved. This project and its source code are protected under international copyright law.
+            </div>
+        </div>
+
+        <div class="item">
+            <span class="ico">🐙</span>
+            <div>
+                <strong>GitHub — Official Repository</strong><br>
+                The source code is officially registered and maintained on GitHub.<br>
+                <a href="https://github.com/LC,LC" target="_blank" rel="noopener">github.com/ariaazizi</a>
+            </div>
+        </div>
+
+        <div class="item">
+            <span class="ico">🌐</span>
+            <div>
+                <strong>Official Website</strong><br>
+                This is the only officially registered version of GOTY Archive.<br>
+                Any other copies or derivatives are not authorized.
+            </div>
+        </div>
+
+        <div class="item">
+            <span class="ico">✅</span>
+            <div>
+                <strong>Verified Project</strong><br>
+                This project has been registered and verified. The author retains full ownership of the design, code, and data structure.
+            </div>
+        </div>
+
+        <div class="item">
+            <span class="ico">⚖️</span>
+            <div>
+                <strong>Legal Notice</strong><br>
+                Unauthorized reproduction, distribution, or modification of this project — in whole or in part — is strictly prohibited without prior written permission from the author.
+            </div>
+        </div>
+
+        <div class="item">
+            <span class="ico">📧</span>
+            <div>
+                <strong>Contact</strong><br>
+                For permissions, licensing, or inquiries, please contact the author directly.
+            </div>
+        </div>
+
+        <div class="close-row">
+            <button class="admin-btn primary" id="copyModalClose">
+                <span>✓</span>
+                <span>I Understand</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- =========================
+     Theme veil
+========================= -->
+<div class="theme-veil" id="themeTransition" aria-hidden="true"></div>
+
+<!-- =========================
+     Toast
+========================= -->
+<div class="toast" id="toast"></div>
+
+<!-- =========================
+     ADMIN PANEL
+========================= -->
+<div class="panel-veil" id="adminVeil"></div>
+
+<aside class="panel admin wide" id="adminPanel" role="dialog" aria-modal="true" aria-label="پنل مدیریت">
+
+    <div class="panel-head">
+        <div class="panel-title">پنل مدیریت</div>
+        <button class="panel-close" id="adminClose" aria-label="بستن">&times;</button>
+    </div>
+
+    <div class="panel-tabs" role="tablist">
+        <button class="p-tab on" data-tab="stats" role="tab">📊 آمار</button>
+        <button class="p-tab" data-tab="list" role="tab">📋 بازی‌ها</button>
+        <button class="p-tab" data-tab="edit" role="tab">✎ افزودن / ویرایش</button>
+        <button class="p-tab" data-tab="perf" role="tab">⚡ عملکرد</button>
+        <button class="p-tab" data-tab="backup" role="tab">💾 پشتیبان</button>
+        <button class="p-tab" data-tab="about" role="tab">ℹ درباره</button>
+    </div>
+
+    <div class="panel-body">
+
+        <!-- ---------- STATS ---------- -->
+        <div class="pane on" data-pane="stats">
+            <div class="admin-section-title">خلاصه آرشیو</div>
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <span class="n" id="aStatGames">۰</span>
+                    <span class="l">بازی</span>
+                </div>
+                <div class="stat-card">
+                    <span class="n" id="aStatAwards">۰</span>
+                    <span class="l">جایزه</span>
+                </div>
+                <div class="stat-card">
+                    <span class="n" id="aStatAvg">۰</span>
+                    <span class="l">میانگین متا</span>
+                </div>
+                <div class="stat-card">
+                    <span class="n" id="aStatFavs">۰</span>
+                    <span class="l">علاقه‌مندی</span>
+                </div>
+            </div>
+
+            <div class="admin-section-title">اطلاعات دستگاه</div>
+            <div class="admin-hint" id="aDevInfo" style="direction:ltr;text-align:left;font-family:'Fira Code',monospace;line-height:1.9;">
+                در حال بررسی...
+            </div>
+
+            <div class="admin-section-title">دسترسی سریع</div>
+            <div class="admin-hint">
+                برای باز کردن این پنل، توی کادر جستجو تایپ کن:
+                <code>@admin</code><br>
+                کلید <code>Esc</code> برای بستن · <code>/</code> برای جستجوی سریع.
+            </div>
+        </div>
+
+        <!-- ---------- LIST ---------- -->
+        <div class="pane" data-pane="list">
+            <input type="text" id="aSearch" class="admin-search" placeholder="جستجو در بازی‌ها...">
+
+            <div class="admin-btn-row" style="margin-top:0;margin-bottom:12px;">
+                <button class="admin-btn primary" id="aNew">
+                    <span>＋</span>
+                    <span>بازی جدید</span>
+                </button>
+            </div>
+
+            <div class="admin-list" id="aList"></div>
+        </div>
+
+        <!-- ---------- EDIT ---------- -->
+        <div class="pane" data-pane="edit">
+            <div class="admin-section-title" id="aFormTitle">افزودن بازی جدید</div>
+
+            <form id="aForm" autocomplete="off">
+                <div class="field">
+                    <label for="fTitle">عنوان بازی</label>
+                    <input type="text" id="fTitle" name="title" required placeholder="مثلاً Elden Ring">
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="fYear">سال</label>
+                        <input type="number" id="fYear" name="year" required min="1990" max="2100" placeholder="2022">
+                    </div>
+                    <div class="field">
+                        <label for="fAwards">تعداد جوایز</label>
+                        <input type="number" id="fAwards" name="awards" min="0" placeholder="435">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="fDev">سازنده</label>
+                        <input type="text" id="fDev" name="dev" placeholder="FromSoftware">
+                    </div>
+                    <div class="field">
+                        <label for="fGenre">ژانر</label>
+                        <input type="text" id="fGenre" name="genre" placeholder="Action RPG">
+                    </div>
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="fMeta">نمره Metacritic</label>
+                        <input type="number" id="fMeta" name="metacritic" min="0" max="100" placeholder="96">
+                    </div>
+                    <div class="field">
+                        <label for="fOpen">نمره OpenCritic</label>
+                        <input type="number" id="fOpen" name="opencritic" min="0" max="100" placeholder="95">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="fDesc">توضیح کوتاه</label>
+                    <textarea id="fDesc" name="desc" placeholder="یک پاراگراف درباره بازی..."></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="fWhy">چرا برنده شد؟</label>
+                    <textarea id="fWhy" name="why" placeholder="دلیل انتخاب این بازی به عنوان بهترین سال..."></textarea>
+                </div>
+
+                <div class="admin-btn-row">
+                    <button type="submit" class="admin-btn primary">
+                        <span>💾</span>
+                        <span>ذخیره</span>
+                    </button>
+                    <button type="button" class="admin-btn" id="aClear">
+                        <span>✕</span>
+                        <span>پاک کردن فرم</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ---------- PERFORMANCE ---------- -->
+        <div class="pane" data-pane="perf">
+            <div class="admin-section-title">سطح گرافیکی (۶ سطح)</div>
+            <p class="admin-hint" style="margin-top:0;margin-bottom:12px;">
+                از <strong>Ultra-Low</strong> (سریع‌ترین، بدون افکت) تا <strong>Ultra</strong> (کامل‌ترین، با بلوم).
+                روی دستگاه ضعیف، سطح رو کم کن.
+            </p>
+
+            <div class="tile-grid" id="aPerfTiles">
+                <button class="tile" data-tier="ultra-low">
+                    <span class="check">✓</span>
+                    <span class="ic">🪫</span>
+                    <span class="nm">Ultra-Low</span>
+                    <span class="ds">بدون بلور · بدون انیمیشن · فقط رنگ ساده</span>
+                </button>
+                <button class="tile" data-tier="low">
+                    <span class="check">✓</span>
+                    <span class="ic">🔋</span>
+                    <span class="nm">Low</span>
+                    <span class="ds">بلور خیلی کم · افکت‌ها خاموش</span>
+                </button>
+                <button class="tile" data-tier="mid-low">
+                    <span class="check">✓</span>
+                    <span class="ic">⚡</span>
+                    <span class="nm">Mid-Low</span>
+                    <span class="ds">بلور کم · نیمه‌افکت</span>
+                </button>
+                <button class="tile" data-tier="mid">
+                    <span class="check">✓</span>
+                    <span class="ic">⚖️</span>
+                    <span class="nm">Mid</span>
+                    <span class="ds">تعادل بین سرعت و زیبایی</span>
+                </button>
+                <button class="tile" data-tier="high">
+                    <span class="check">✓</span>
+                    <span class="ic">✨</span>
+                    <span class="nm">High</span>
+                    <span class="ds">همه افکت‌ها · بلور کامل</span>
+                </button>
+                <button class="tile" data-tier="ultra">
+                    <span class="check">✓</span>
+                    <span class="ic">🌟</span>
+                    <span class="nm">Ultra</span>
+                    <span class="ds">حداکثر بلوم و درخشش نئون</span>
+                </button>
+            </div>
+
+            <div class="admin-section-title">تشخیص خودکار</div>
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">تشخیص خودکار سطح</div>
+                    <div class="st">بر اساس CPU، RAM، GPU، صفحه‌نمایش و سرعت شبکه</div>
+                </div>
+                <div class="switch on" id="aAutoPerf" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="admin-section-title">اندازه‌گیری FPS</div>
+            <div class="admin-btn-row" style="margin-top:0;">
+                <button class="admin-btn primary" id="aMeasure">
+                    <span>📊</span>
+                    <span>شروع تست (۲.۵ ثانیه)</span>
+                </button>
+            </div>
+            <div class="admin-hint" id="aFpsOut" style="direction:ltr;text-align:left;font-family:'Fira Code',monospace;">
+                آماده
+            </div>
+        </div>
+
+        <!-- ---------- BACKUP ---------- -->
+        <div class="pane" data-pane="backup">
+            <div class="admin-section-title">پشتیبان‌گیری</div>
+            <p class="admin-hint" style="margin-bottom:12px;">
+                یه فایل JSON از همه‌ی بازی‌ها، تنظیمات و علاقه‌مندی‌ها می‌گیره.
+            </p>
+            <div class="admin-btn-row" style="margin-top:0;">
+                <button class="admin-btn primary" id="aExport">
+                    <span>⬇</span>
+                    <span>خروجی JSON</span>
+                </button>
+                <button class="admin-btn" id="aImport">
+                    <span>⬆</span>
+                    <span>بازیابی از فایل</span>
+                </button>
+                <input type="file" id="aImportInput" accept=".json,application/json" hidden>
+            </div>
+
+            <div class="admin-section-title">منطقه خطر</div>
+            <div class="admin-btn-row" style="margin-top:0;">
+                <button class="admin-btn danger" id="aReset">
+                    <span>🗑</span>
+                    <span>بازنشانی کامل</span>
+                </button>
+            </div>
+            <div class="admin-hint">
+                با بازنشانی، همه‌ی تغییرات، تنظیمات و علاقه‌مندی‌ها پاک می‌شن.
+            </div>
+        </div>
+
+        <!-- ---------- ABOUT ---------- -->
+        <div class="pane" data-pane="about">
+            <div class="admin-section-title">درباره پروژه</div>
+            <div class="admin-hint">
+                <strong>GOTY Archive</strong><br>
+                آرشیو برندگان بهترین بازی سال از ۲۰۰۳ تا ۲۰۲۵.
+            </div>
+
+            <div class="admin-section-title">سازنده</div>
+            <div class="admin-hint">
+                <strong>آریا عزیزی</strong><br>
+                &copy; ۲۰۲۵ — تمام حقوق محفوظ است.
+            </div>
+
+            <div class="admin-section-title">نسخه و تکنولوژی</div>
+            <div class="admin-hint" style="direction:ltr;text-align:left;font-family:'Fira Code',monospace;">
+                v3.0.0<br>
+                Vanilla JS · No framework<br>
+                6-tier adaptive performance
+            </div>
+
+            <div class="admin-section-title">مخزن رسمی</div>
+            <div class="admin-hint">
+                <a href="https://github.comSXSX" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;border-bottom:1px dashed;">github.com/ariaazizi</a>
+            </div>
+        </div>
+
+    </div>
+</aside>
+
+<!-- =========================
+     USER SETTINGS PANEL
+========================= -->
+<div class="panel-veil" id="userVeil"></div>
+
+<aside class="panel user" id="userPanel" role="dialog" aria-modal="true" aria-label="تنظیمات کاربر">
+
+    <div class="panel-head">
+        <div class="panel-title">تنظیمات</div>
+        <button class="panel-close" id="userClose" aria-label="بستن">&times;</button>
+    </div>
+
+    <div class="panel-tabs" role="tablist">
+        <button class="p-tab on" data-tab="look" role="tab">🎨 ظاهر</button>
+        <button class="p-tab" data-tab="perf" role="tab">⚡ عملکرد</button>
+        <button class="p-tab" data-tab="misc" role="tab">⚙ متفرقه</button>
+    </div>
+
+    <div class="panel-body">
+
+        <!-- ---------- LOOK ---------- -->
+        <div class="pane on" data-pane="look">
+
+            <div class="admin-section-title">رنگ تاکیدی</div>
+            <div class="swatch-row" id="uColors">
+                <button class="swatch on" data-color="cyan"   aria-label="فیروزه‌ای"></button>
+                <button class="swatch"    data-color="pink"   aria-label="صورتی"></button>
+                <button class="swatch"    data-color="lime"   aria-label="سبز"></button>
+                <button class="swatch"    data-color="orange" aria-label="نارنجی"></button>
+                <button class="swatch"    data-color="purple" aria-label="بنفش"></button>
+                <button class="swatch"    data-color="warn"   aria-label="زرد"></button>
+            </div>
+
+            <div class="admin-section-title">تم</div>
+            <div class="tile-grid" id="uTheme">
+                <button class="tile on" data-theme="dark">
+                    <span class="check">✓</span>
+                    <span class="ic">🌙</span>
+                    <span class="nm">تاریک</span>
+                    <span class="ds">حالت شبانه</span>
+                </button>
+                <button class="tile" data-theme="light">
+                    <span class="check">✓</span>
+                    <span class="ic">☀️</span>
+                    <span class="nm">روشن</span>
+                    <span class="ds">حالت روزانه</span>
+                </button>
+                <button class="tile" data-theme="auto">
+                    <span class="check">✓</span>
+                    <span class="ic">🌗</span>
+                    <span class="nm">خودکار</span>
+                    <span class="ds">بر اساس ساعت سیستم</span>
+                </button>
+            </div>
+
+            <div class="admin-section-title">اندازه‌ی فونت</div>
+            <div class="slider-row">
+                <div class="lbl">
+                    <span>مقیاس متن</span>
+                    <span class="val" id="uFontVal">100%</span>
+                </div>
+                <input type="range" id="uFont" min="80" max="130" step="5" value="100">
+            </div>
+
+            <div class="admin-section-title">شفافیت شیشه</div>
+            <div class="slider-row">
+                <div class="lbl">
+                    <span>میزان بلور</span>
+                    <span class="val" id="uBlurVal">30px</span>
+                </div>
+                <input type="range" id="uBlur" min="0" max="40" step="2" value="30">
+            </div>
+
+        </div>
+
+        <!-- ---------- PERFORMANCE ---------- -->
+        <div class="pane" data-pane="perf">
+
+            <div class="admin-section-title">سطح گرافیکی (۶ سطح)</div>
+            <p class="admin-hint" style="margin-top:0;margin-bottom:12px;">
+                اگه سایت لگ می‌زنه، سطح رو کم کن.
+            </p>
+
+            <div class="tile-grid" id="uPerfTiles">
+                <button class="tile" data-tier="ultra-low">
+                    <span class="check">✓</span>
+                    <span class="ic">🪫</span>
+                    <span class="nm">Ultra-Low</span>
+                    <span class="ds">سریع‌ترین · بدون افکت</span>
+                </button>
+                <button class="tile" data-tier="low">
+                    <span class="check">✓</span>
+                    <span class="ic">🔋</span>
+                    <span class="nm">Low</span>
+                    <span class="ds">سبک · بلور خیلی کم</span>
+                </button>
+                <button class="tile" data-tier="mid-low">
+                    <span class="check">✓</span>
+                    <span class="ic">⚡</span>
+                    <span class="nm">Mid-Low</span>
+                    <span class="ds">نیمه‌سبک</span>
+                </button>
+                <button class="tile" data-tier="mid">
+                    <span class="check">✓</span>
+                    <span class="ic">⚖️</span>
+                    <span class="nm">Mid</span>
+                    <span class="ds">تعادل</span>
+                </button>
+                <button class="tile" data-tier="high">
+                    <span class="check">✓</span>
+                    <span class="ic">✨</span>
+                    <span class="nm">High</span>
+                    <span class="ds">کامل</span>
+                </button>
+                <button class="tile" data-tier="ultra">
+                    <span class="check">✓</span>
+                    <span class="ic">🌟</span>
+                    <span class="nm">Ultra</span>
+                    <span class="ds">حداکثر بلوم</span>
+                </button>
+            </div>
+
+            <div class="admin-section-title">سرعت انیمیشن</div>
+            <div class="slider-row">
+                <div class="lbl">
+                    <span>ضریب سرعت</span>
+                    <span class="val" id="uAnimVal">1.0x</span>
+                </div>
+                <input type="range" id="uAnim" min="50" max="200" step="10" value="100">
+            </div>
+            <div class="admin-hint">
+                کمتر = سریع‌تر · بیشتر = آرام‌تر و سینمایی‌تر
+            </div>
+
+            <div class="admin-section-title">افکت‌های اختیاری</div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">رقص نور پس‌زمینه</div>
+                    <div class="st">انیمیشن نورهای نئون</div>
+                </div>
+                <div class="switch on" id="uFXBackground" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">افکت کش لاستیکی</div>
+                    <div class="st">کشیدن دکمه‌ها با موس (iOS 26)</div>
+                </div>
+                <div class="switch on" id="uFXStretch" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">بلور پشت کارت‌ها</div>
+                    <div class="st">وقتی روی یه کارت هستی، بقیه بلور بشن</div>
+                </div>
+                <div class="switch on" id="uFXCardBlur" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">ذرات قلب</div>
+                    <div class="st">انفجار ذرات موقع کلیک روی علاقه‌مندی</div>
+                </div>
+                <div class="switch on" id="uFXHeartParticles" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">افکت بلوم (Bloom)</div>
+                    <div class="st">درخشش نئون قوی‌تر روی کارت‌ها و مودال</div>
+                </div>
+                <div class="switch on" id="uFXBloom" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+        </div>
+
+        <!-- ---------- MISC ---------- -->
+        <div class="pane" data-pane="misc">
+
+            <div class="admin-section-title">حرکت و اسکرول</div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">اسکرول نرم</div>
+                    <div class="st">وقتی روی لینک کلیک می‌کنی، آروم بره</div>
+                </div>
+                <div class="switch on" id="uSmooth" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="toggle-row">
+                <div class="txt">
+                    <div class="tt">نمایش نوار پیشرفت</div>
+                    <div class="st">نوار رنگی بالای صفحه موقع اسکرول</div>
+                </div>
+                <div class="switch on" id="uScrollBar" role="switch" tabindex="0" aria-checked="true"></div>
+            </div>
+
+            <div class="admin-section-title">ذخیره‌سازی</div>
+
+            <div class="admin-btn-row" style="margin-top:0;">
+                <button class="admin-btn" id="uResetSettings">
+                    <span>🔄</span>
+                    <span>بازنشانی تنظیمات</span>
+                </button>
+                <button class="admin-btn danger" id="uClearCache">
+                    <span>🧹</span>
+                    <span>پاک کردن حافظه</span>
+                </button>
+            </div>
+
+            <div class="admin-hint">
+                «پاک کردن حافظه» علاقه‌مندی‌ها، تنظیمات و تم رو از بین می‌بره.
+            </div>
+
+            <div class="admin-section-title">درباره</div>
+            <div class="admin-hint">
+                <strong>GOTY Archive</strong> · نسخه v3.0.0<br>
+                ساخته شده توسط <strong>آریا عزیزی</strong><br>
+                &copy; ۲۰۲۵ · تمام حقوق محفوظ است
+            </div>
+
+        </div>
+
+    </div>
+</aside>
+
+<script src="script.js"></script>
+</body>
+</html>
